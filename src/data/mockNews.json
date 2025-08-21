@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "summary": "OpenAIが新モデルGPT-4oを発表",
+    "pubDate": "2025-08-20"
+  },
+  {
+    "id": "2",
+    "summary": "LangChain v1.2.0で新機能追加",
+    "pubDate": "2025-08-19"
+  },
+  {
+    "id": "3",
+    "summary": "Hugging Faceが新しい日本語音声モデルを公開",
+    "pubDate": "2025-08-18"
+  }
+]

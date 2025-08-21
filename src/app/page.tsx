@@ -8,7 +8,7 @@ export default function HomePage() {
   // 仮データ読み込み
   const newsList = mockNews as Article[];
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-24">
       {newsList.map((item) => (
         <NewsCard key={item.id} article={item} />
       ))}

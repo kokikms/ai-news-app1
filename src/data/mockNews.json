@@ -1,17 +1,102 @@
 [
   {
     "id": "1",
-    "summary": "OpenAIが新モデルGPT-4oを発表",
-    "pubDate": "2025-08-20"
+    "summary": "OpenAI、GPT-5を正式リリース。思考モードと高速応答を統合",
+    "pubDate": "2025-08-07"
   },
   {
     "id": "2",
-    "summary": "LangChain v1.2.0で新機能追加",
-    "pubDate": "2025-08-19"
+    "summary": "OpenAI、120Bオープンウェイト「gpt-oss」を公開（商用可）",
+    "pubDate": "2025-08-05"
   },
   {
     "id": "3",
-    "summary": "Hugging Faceが新しい日本語音声モデルを公開",
-    "pubDate": "2025-08-18"
+    "summary": "OpenAI、「ChatGPT Agents」を一般提供。コード/ブラウザ/ファイルを自動連携",
+    "pubDate": "2025-07-17"
+  },
+  {
+    "id": "4",
+    "summary": "Google、Gemini 2.5 ProがVertex AIでGA。長文・推論・ツール連携を強化",
+    "pubDate": "2025-06-17"
+  },
+  {
+    "id": "5",
+    "summary": "Google、Gemini 2.0を発表（Flash/Pro/Thinking）。マルチモーダル基盤を刷新",
+    "pubDate": "2025-02-13"
+  },
+  {
+    "id": "6",
+    "summary": "Meta、Llama 4（Scout/Maverick）を発表。ネイティブ多モーダル化",
+    "pubDate": "2025-04-05"
+  },
+  {
+    "id": "7",
+    "summary": "Llama 4、Vertex AIのMaaSとして一般提供開始",
+    "pubDate": "2025-04-29"
+  },
+  {
+    "id": "8",
+    "summary": "Anthropic、Claude 3.7 Sonnetを発表。ハイブリッド推論で“思考時間”を制御可能",
+    "pubDate": "2025-02-24"
+  },
+  {
+    "id": "9",
+    "summary": "xAI、Grok 3を公開。リアルタイム検索とThink/Big Brainモードを搭載",
+    "pubDate": "2025-02-19"
+  },
+  {
+    "id": "10",
+    "summary": "Mistral、推論特化モデル「Magistral」を発表。Smallはオープン提供",
+    "pubDate": "2025-06-10"
+  },
+  {
+    "id": "11",
+    "summary": "Mistral、音声モデル「Voxtral」を公開。会話/要約の品質を強化",
+    "pubDate": "2025-07-15"
+  },
+  {
+    "id": "12",
+    "summary": "DeepSeek、推論モデルR1をMITライセンスで公開。o1-mini相当を目指す",
+    "pubDate": "2025-01-20"
+  },
+  {
+    "id": "13",
+    "summary": "DeepSeek、V3テクレポを公開。671B MoE（37B活性）で効率と精度を両立",
+    "pubDate": "2024-12-27"
+  },
+  {
+    "id": "14",
+    "summary": "Qwen、推論モデルQwQ-32Bを一般公開。中規模で高性能を狙う",
+    "pubDate": "2025-07-21"
+  },
+  {
+    "id": "15",
+    "summary": "Alibaba、Qwen2.5-Max（MoE）を発表。大規模推論での性能を強調",
+    "pubDate": "2025-01-28"
+  },
+  {
+    "id": "16",
+    "summary": "Microsoft、Phi-4/Reasoning系を拡充。小型でも高度な推論をAzureで提供",
+    "pubDate": "2025-07-22"
+  },
+  {
+    "id": "17",
+    "summary": "NVIDIA、NIM 1.8系のリリースノートを更新（2025-08-12時点）",
+    "pubDate": "2025-08-12"
+  },
+  {
+    "id": "18",
+    "summary": "NVIDIA、FLUX.1 KontextのNIMマイクロサービスを提供開始（開発者向け）",
+    "pubDate": "2025-08-13"
+  },
+  {
+    "id": "19",
+    "summary": "vLLM V1（アルファ）発表。新アーキテクチャで最大1.7倍高速",
+    "pubDate": "2025-01-15"
+  },
+  {
+    "id": "20",
+    "summary": "Ollama、マルチモーダル対応エンジンを公開。ローカルでも画像入力に対応",
+    "pubDate": "2025-05-15"
   }
 ]

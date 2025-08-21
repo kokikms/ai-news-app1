@@ -12,12 +12,11 @@ export default function NewsCard({ article }: { article: Article }) {
   return (
     <Link
       href={`/news/${encodeURIComponent(article.id)}`}
-      className="block p-4 border rounded hover:shadow"
+      className="block p-4 border rounded hover:shadow-sm transition"
+      style={{ minHeight: 0, lineHeight: 1.2 }}
     >
-      <div className="text-sm text-gray-500">
-        {article.pubDate || "2025-08-21"}
-      </div>
-      <h2 className="font-semibold">{article.summary}</h2>
+      <div className="text-sm text-gray-500 mb-1">{article.pubDate}</div>
+      <h2 className="text-base font-medium">{article.summary}</h2>
     </Link>
   );
 }

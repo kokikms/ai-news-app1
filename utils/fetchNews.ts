@@ -1,6 +1,6 @@
 // utils/fetchNews.ts
 import { fetchRSS, RSSItem as RSSLive } from "./fetchRSS";
-import { fetchMock, RSSItem as RSSMock } from "./fetchMock";
+import { fetchMock, MockItem as RSSMock } from "./fetchMock";
 
 export type RSSItem = RSSLive | RSSMock;
 

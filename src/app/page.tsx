@@ -10,11 +10,15 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState<string>("");
   const [input, setInput] = useState<string>("");
+  const [strict, setStrict] = useState<boolean>(false);
+  const [sort, setSort] = useState<"date" | "relevance">("date");
 
   useEffect(() => {
-    const url = query
-      ? `/api/news?keyword=${encodeURIComponent(query)}`
-      : "/api/news"; // 未指定時はAPI側のデフォルトクエリ
+    const params = new URLSearchParams();
+    if (query) params.set("keyword", query);
+    if (strict) params.set("strict", "true");
+    if (sort) params.set("sort", sort);
+    const url = `/api/news${params.toString() ? `?${params.toString()}` : ""}`; // 未指定時はAPI側のデフォルトクエリ
     setLoading(true);
     fetch(url)
       .then((res) => res.json())
@@ -28,7 +32,7 @@ export default function Home() {
       })
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
-  }, [query]);
+  }, [query, strict, sort]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,13 +47,13 @@ export default function Home() {
 
   return (
     <main className="p-4">
-      <form onSubmit={onSubmit} className="mb-2 flex items-center gap-1">
+      <form onSubmit={onSubmit} className="mb-2 flex items-center gap-2 flex-wrap">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={DEFAULT_NEWS_QUERY}
-          className="flex-1 h-9 text-sm border rounded-md px-2 py-1"
+          className="flex-1 min-w-[220px] h-9 text-sm border rounded-md px-2 py-1"
         />
         <button
           type="submit"
@@ -66,6 +70,25 @@ export default function Home() {
         >
           クリア
         </button>
+        <label className="flex items-center gap-1 text-xs text-gray-700">
+          <input
+            type="checkbox"
+            checked={strict}
+            onChange={(e) => setStrict(e.target.checked)}
+          />
+          厳密一致
+        </label>
+        <label className="flex items-center gap-1 text-xs text-gray-700">
+          並び:
+          <select
+            className="h-8 text-xs border rounded px-1"
+            value={sort}
+            onChange={(e) => setSort(e.target.value as any)}
+          >
+            <option value="date">新着</option>
+            <option value="relevance">関連</option>
+          </select>
+        </label>
       </form>
 
       {query && (

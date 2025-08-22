@@ -8,3 +8,11 @@ body {
 .container {
   max-width: 640px;
 }
+/* フッター高さ＋iPhone安全領域分を padding-bottom で確保 */
+.pb-footer-safe {
+  padding-bottom: calc(8rem + env(safe-area-inset-bottom, 12px) + 1rem);
+}
+body {
+  /* フッター分の余白を常に確保 */
+  padding-bottom: calc(8rem + env(safe-area-inset-bottom, 12px) + 1rem);
+}

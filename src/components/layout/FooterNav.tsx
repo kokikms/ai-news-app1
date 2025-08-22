@@ -11,22 +11,29 @@ import {
 
 export default function FooterNav() {
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white border-t p-2 flex justify-around">
-      <Link href="/" aria-label="ホーム">
-        <HiHome size={24} />
-      </Link>
-      <Link href="/favorites" aria-label="お気に入り">
-        <HiStar size={24} />
-      </Link>
-      <Link href="/search" aria-label="検索">
-        <HiSearch size={24} />
-      </Link>
-      <Link href="/settings" aria-label="設定">
-        <HiCog size={24} />
-      </Link>
-      <Link href="/about" aria-label="アバウト">
-        <HiInformationCircle size={24} />
-      </Link>
+    <nav
+      className="fixed bottom-0 left-0 w-full bg-white border-t flex justify-around"
+      style={{
+        paddingBottom: "env(safe-area-inset-bottom, 12px)",
+        height: `calc(3rem + env(safe-area-inset-bottom, 12px))`,
+      }}
+    >
+      {[
+        { href: "/", icon: HiHome, label: "ホーム" },
+        { href: "/favorites", icon: HiStar, label: "お気に入り" },
+        { href: "/search", icon: HiSearch, label: "検索" },
+        { href: "/settings", icon: HiCog, label: "設定" },
+        { href: "/about", icon: HiInformationCircle, label: "アバウト" },
+      ].map(({ href, icon: Icon, label }) => (
+        <Link
+          key={href}
+          href={href}
+          aria-label={label}
+          className="flex-1 flex items-center justify-center"
+        >
+          <Icon size={28} />
+        </Link>
+      ))}
     </nav>
   );
 }

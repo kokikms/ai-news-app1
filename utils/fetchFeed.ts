@@ -43,15 +43,18 @@ function pickImage(item: AnyItem): string | undefined {
 
 export async function fetchFeed(url: string): Promise<LiveItem[]> {
   const feed = await parser.parseURL(url);
-  return feed.items.map((item, i) => ({
-    id: stableId((item as any).guid, item.link, i),
-    title: item.title || "",
-    link: item.link || "",
-    pubDate: item.pubDate || "",
-    contentSnippet: item.contentSnippet || "",
+  const items: AnyItem[] = Array.isArray((feed as any)?.items)
+    ? ((feed as any).items as AnyItem[])
+    : [];
+  return items.map((entry: AnyItem, i: number): LiveItem => ({
+    id: stableId((entry as any).guid, entry.link ?? "", i),
+    title: entry.title ?? "",
+    link: entry.link ?? "",
+    pubDate: entry.pubDate ?? "",
+    contentSnippet: entry.contentSnippet ?? "",
     enclosure: (() => {
-      const url = pickImage(item);
-      return url ? { url } : undefined;
+      const imageUrl = pickImage(entry);
+      return imageUrl ? { url: imageUrl } : undefined;
     })(),
   }));
 }

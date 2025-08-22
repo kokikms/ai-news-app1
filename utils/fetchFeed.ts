@@ -1,19 +1,9 @@
-// utils/fetchRSS.ts
+// utils/fetchFeed.ts
 import Parser from "rss-parser";
 import { stableId } from "./id";
+import type { RSSItem as LiveItem } from "./fetchRSS";
 
-export type RSSItem = {
-  id: string;
-  title: string;
-  link: string;
-  pubDate: string;
-  contentSnippet: string;
-  enclosure?: { url: string };
-};
-
-type AnyItem = RSSItem & {
-  [k: string]: any;
-};
+type AnyItem = LiveItem & { [k: string]: any };
 
 const parser = new Parser<AnyItem>({
   customFields: {
@@ -51,10 +41,7 @@ function pickImage(item: AnyItem): string | undefined {
   return undefined;
 }
 
-export async function fetchRSS(keyword: string): Promise<RSSItem[]> {
-  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(
-    keyword
-  )}&hl=ja&gl=JP&ceid=JP:ja`;
+export async function fetchFeed(url: string): Promise<LiveItem[]> {
   const feed = await parser.parseURL(url);
   return feed.items.map((item, i) => ({
     id: stableId((item as any).guid, item.link, i),

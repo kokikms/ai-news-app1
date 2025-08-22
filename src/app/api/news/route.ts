@@ -10,6 +10,8 @@ export async function GET(request: Request) {
   const sort = searchParams.get("sort") === "relevance" ? "relevance" : "date";
   const when = searchParams.get("when"); // 例: 1d,7d,30d
   const excludes = searchParams.getAll("exclude"); // 例: exclude=cloud.google.com
+  const variate = (searchParams.get("variate") as any) || "day"; // none|day|hour
+  const mix = (searchParams.get("mix") as any) || "balanced"; // balanced|none
 
   // キーワード加工
   let keyword = raw.trim();
@@ -27,7 +29,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const items = await fetchNews(keyword, { sort });
+    const items = await fetchNews(keyword, { sort, variate, mix });
     return NextResponse.json(items);
   } catch (e) {
     return NextResponse.json({ error: "取得失敗" }, { status: 500 });

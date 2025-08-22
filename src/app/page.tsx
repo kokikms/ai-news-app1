@@ -11,7 +11,7 @@ export default function Home() {
   const [query, setQuery] = useState<string>("");
   const [input, setInput] = useState<string>("");
   const [strict, setStrict] = useState<boolean>(false);
-  const [sort, setSort] = useState<"date" | "relevance">("date");
+  const [sort, setSort] = useState<"date" | "relevance">("relevance");
 
   useEffect(() => {
     const params = new URLSearchParams();

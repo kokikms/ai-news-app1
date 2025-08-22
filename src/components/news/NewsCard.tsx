@@ -25,6 +25,30 @@ export default function NewsCard({ item }: { item: RSSItem }) {
     : undefined;
   const thumb = (item as any)?.enclosure?.url as string | undefined;
   const timeLabel = relativeTimeJa((item as any).pubDate);
+  
+  // 詳細な日時表示
+  const pubDate = (item as any).pubDate;
+  const detailedTime = pubDate ? new Date(pubDate).toLocaleString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  }) : '';
+
+  // 記事の新鮮度を判定
+  const getFreshnessIndicator = () => {
+    if (!pubDate) return null;
+    const now = new Date();
+    const pubTime = new Date(pubDate);
+    const diffHours = (now.getTime() - pubTime.getTime()) / (1000 * 60 * 60);
+    
+    if (diffHours < 1) return <span className="text-red-600 font-bold">🔥 1時間以内</span>;
+    if (diffHours < 3) return <span className="text-orange-600 font-bold">⚡ 3時間以内</span>;
+    if (diffHours < 6) return <span className="text-yellow-600 font-bold">📰 6時間以内</span>;
+    if (diffHours < 12) return <span className="text-blue-600 font-bold">📖 12時間以内</span>;
+    return <span className="text-gray-600">📚 12時間以上前</span>;
+  };
 
   const Title = (
     <h2
@@ -52,7 +76,19 @@ export default function NewsCard({ item }: { item: RSSItem }) {
           <span>{domain}</span>
         </span>
       )}
-      {timeLabel && <span>・{timeLabel}</span>}
+      {timeLabel && (
+        <span className="flex items-center gap-1">
+          <span>・{timeLabel}</span>
+          <span title={detailedTime} className="text-gray-400">
+            ({detailedTime})
+          </span>
+        </span>
+      )}
+      {getFreshnessIndicator() && (
+        <span className="ml-2">
+          {getFreshnessIndicator()}
+        </span>
+      )}
     </div>
   );
 
@@ -62,11 +98,11 @@ export default function NewsCard({ item }: { item: RSSItem }) {
         {Meta}
         {Title}
       </div>
-      {thumb && (
+      {(thumb || (item as any).enclosure?.url) && (
         <div className="w-24 h-24 md:w-28 md:h-28 shrink-0 bg-gray-50">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={thumb}
+            src={thumb || (item as any).enclosure?.url}
             alt=""
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"

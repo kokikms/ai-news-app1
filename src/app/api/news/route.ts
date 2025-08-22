@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const raw = searchParams.get("keyword") || DEFAULT_NEWS_QUERY;
   const strict = searchParams.get("strict") === "true";
-  const sort = searchParams.get("sort") === "relevance" ? "relevance" : "date";
+  const sort = searchParams.get("sort") === "relevance" ? "relevance" : "date"; // デフォルトを新着順に
   const when = searchParams.get("when"); // 例: 1d,7d,30d
   const excludes = searchParams.getAll("exclude"); // 例: exclude=cloud.google.com
   const variate = (searchParams.get("variate") as any) || "day"; // none|day|hour
@@ -30,7 +30,14 @@ export async function GET(request: Request) {
 
   try {
     const items = await fetchNews(keyword, { sort, variate, mix });
-    return NextResponse.json(items);
+    
+    // キャッシュ制御ヘッダーを追加
+    const response = NextResponse.json(items);
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (e) {
     return NextResponse.json({ error: "取得失敗" }, { status: 500 });
   }

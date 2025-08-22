@@ -11,16 +11,24 @@ export default function Home() {
   const [query, setQuery] = useState<string>("");
   const [input, setInput] = useState<string>("");
   const [strict, setStrict] = useState<boolean>(false);
-  const [sort, setSort] = useState<"date" | "relevance">("relevance");
+  const [sort, setSort] = useState<"date" | "relevance">("date"); // デフォルトを新着順に変更
 
-  useEffect(() => {
+  const fetchNews = () => {
     const params = new URLSearchParams();
     if (query) params.set("keyword", query);
     if (strict) params.set("strict", "true");
     if (sort) params.set("sort", sort);
+    // タイムスタンプを追加してキャッシュを回避
+    params.set("_t", Date.now().toString());
     const url = `/api/news${params.toString() ? `?${params.toString()}` : ""}`; // 未指定時はAPI側のデフォルトクエリ
     setLoading(true);
-    fetch(url)
+    fetch(url, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    })
       .then((res) => res.json())
       .then((data: unknown) => {
         if (Array.isArray(data)) {
@@ -32,6 +40,10 @@ export default function Home() {
       })
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchNews();
   }, [query, strict, sort]);
 
   const onSubmit = (e: React.FormEvent) => {
@@ -94,6 +106,18 @@ export default function Home() {
       {query && (
         <div className="text-xs text-gray-600 mb-2">
           検索: <span className="font-medium">{query}</span>
+        </div>
+      )}
+
+      {sort === "date" && (
+        <div className="text-xs text-blue-600 mb-2">
+          📅 最新の記事から表示中
+        </div>
+      )}
+
+      {sort === "relevance" && (
+        <div className="text-xs text-green-600 mb-2">
+          🎯 キーワードとの関連度順で表示中
         </div>
       )}
 

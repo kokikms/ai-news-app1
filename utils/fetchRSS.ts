@@ -52,9 +52,12 @@ function pickImage(item: AnyItem): string | undefined {
 }
 
 export async function fetchRSS(keyword: string): Promise<RSSItem[]> {
+  // タイムスタンプを追加してキャッシュを回避
+  const timestamp = Date.now();
   const url = `https://news.google.com/rss/search?q=${encodeURIComponent(
     keyword
-  )}&hl=ja&gl=JP&ceid=JP:ja`;
+  )}&hl=ja&gl=JP&ceid=JP:ja&_t=${timestamp}`;
+  
   const feed = await parser.parseURL(url);
   const items: AnyItem[] = Array.isArray((feed as any)?.items)
     ? ((feed as any).items as AnyItem[])

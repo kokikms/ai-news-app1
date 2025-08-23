@@ -15,7 +15,6 @@ export function getExtraFeedUrls(): string[] {
     "https://www.gizmodo.jp/index.xml", // Gizmodo Japan
     "https://k-tai.watch.impress.co.jp/rss/index.xml", // ケータイWatch
     "https://forest.watch.impress.co.jp/rss/index.xml", // 窓の杜
-    "https://www.gizmodo.jp/index.xml", // Gizmodo Japan
     "https://www.engadget.com/rss.xml", // Engadget
     "https://jp.techcrunch.com/feed/", // TechCrunch Japan
     "https://www.cnet.com/rss/all/", // CNET

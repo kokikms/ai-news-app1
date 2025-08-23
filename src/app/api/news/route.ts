@@ -7,7 +7,15 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const raw = searchParams.get("keyword") || DEFAULT_NEWS_QUERY;
   const strict = searchParams.get("strict") === "true";
-  const sort = searchParams.get("sort") === "relevance" ? "relevance" : "date"; // デフォルトを新着順に
+  // sort: relevance/date/popularity を許可（デフォルトは新着順）
+  const sortParam = searchParams.get("sort");
+  const sort: "date" | "relevance" | "popularity" =
+    sortParam === "relevance" ? "relevance" : sortParam === "popularity" ? "popularity" : "date";
+
+  // lang: 指定がない場合は未指定のまま（人気タブで混在表示を可能にする）
+  const langParam = searchParams.get("lang");
+  const lang: "japanese" | "english" | undefined =
+    langParam === "japanese" ? "japanese" : langParam === "english" ? "english" : undefined;
   const when = searchParams.get("when"); // 例: 1d,7d,30d
   const excludes = searchParams.getAll("exclude"); // 例: exclude=cloud.google.com
   const variate = (searchParams.get("variate") as any) || "day"; // none|day|hour
@@ -29,7 +37,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const items = await fetchNews(keyword, { sort, variate, mix });
+    const items = await fetchNews(keyword, { sort, variate, mix, lang });
     
     // キャッシュ制御ヘッダーを追加
     const response = NextResponse.json(items);

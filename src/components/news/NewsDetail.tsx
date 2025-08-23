@@ -1,4 +1,7 @@
 // components/news/NewsDetail.tsx
+import { getRelativeTimeText } from "../../../utils/date";
+import { generateTags, getTagDisplayName, getTagColor } from "../../../utils/tags";
+
 type Article = {
   id: string;
   summary: string;
@@ -11,6 +14,10 @@ type Article = {
 };
 
 export default function NewsDetail({ article }: { article: Article }) {
+  // タグを生成
+  const tags = generateTags(article.summary, article.content);
+  const relativeTime = getRelativeTimeText(article.pubDate);
+
   return (
     <article className="max-w-4xl mx-auto p-6">
       <header className="mb-8">
@@ -22,18 +29,18 @@ export default function NewsDetail({ article }: { article: Article }) {
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           {article.summary}
         </h1>
-        <div className="flex items-center text-sm text-gray-500 space-x-4 mb-6">
-          {article.pubDate && <time>{article.pubDate}</time>}
+        <div className="flex items-center text-sm text-gray-500 space-x-4 mb-4">
           {article.author && <span>著者: {article.author}</span>}
+          {relativeTime && <span>{relativeTime}</span>}
         </div>
-        {article.tags && article.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
-            {article.tags.map((tag) => (
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600"
+                className={`px-2 py-1 text-xs rounded ${getTagColor(tag)} opacity-70`}
               >
-                {tag}
+                {getTagDisplayName(tag).replace(/^[^\s]+\s/, '')}
               </span>
             ))}
           </div>
